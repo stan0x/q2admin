@@ -112,8 +112,8 @@ function ClientCommand(client)
                     end
 
                     if cmd == 'sv' and gi.argc() > 2 then
-                        cmd = gi.argv(2)
-                        param = gi.argv(3)
+                        cmd = gi.argv(3)
+                        param = gi.argv(4)
 
                         if cmd == 'softmap' then
                             if param == nil or string.len(param) < 1 then
