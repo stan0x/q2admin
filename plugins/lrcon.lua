@@ -126,13 +126,18 @@ function ClientCommand(client)
 
                         if cmd == 'stuffcmd' then
                             if param == nil or string.len(param) < 1 then
-                                gi.cprintf(client, PRINT_HIGH, 'Usage: sv stuffcmd <client> <command>\n')
+                                gi.cprintf(client, PRINT_HIGH, 'Usage: sv stuffcmd <client/all> <command>\n')
                             else
                                 local rest = ''
-                                for i=4,gi.argc() do
+                                for i=5,gi.argc() do
                                     rest = rest..gi.argv(i)..' '
                                 end
-                                gi.AddCommandString('sv stuffcmd '..param..' '..rest)
+                                if param == "all" then
+                                	gi.AddCommandString('sv stuffcmd all '..rest)
+                                else
+                                	gi.AddCommandString('sv stuffcmd '..param..' '..rest)
+	
+                                end
                             end
                             return true
                         end
