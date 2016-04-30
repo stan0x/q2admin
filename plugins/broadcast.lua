@@ -1,12 +1,15 @@
 --
 -- simple broadcast plugin by TgT v1.0
 --
--- setup
+-- DESCRIPTION
+--      Broadcast message to clients on server
+-- USAGE: broadcast <msg>
 
+-- setup
 local version = "1.0"
 gi.AddCommandString("sets q2a_broadcast "..version.."\n")
-
 gi.cvar_set("broadcast", "")
+
 
 function RunFrame()
         -- get content of the broadcast cvar
