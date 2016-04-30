@@ -1,6 +1,11 @@
 --
--- a very limited rcon by hifi <3
+-- a very limited rcon by hifi <3  version 1.0
 --
+-- changes by TgT
+-- 1.1 fixed sv softmap and sv stuffall and maybe lrcon status crash
+
+local version = "1.1"
+gi.AddCommandString("sets q2a_lrcon "..version.."\n")
 
 local quit_on_empty 
 local cvars
