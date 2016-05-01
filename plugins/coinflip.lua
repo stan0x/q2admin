@@ -51,7 +51,7 @@ function ClientCommand(client)
 				end -- prints
 			flip_last = time_asked
 			else
-				gi.cprintf(client, PRINT_HIGH, "You cannot flip that fast! Wait for "..flip_flood - diff.." more seconds!\n")
+				gi.cprintf(client, PRINT_HIGH, "Flip again? Cmon, wait for "..flip_flood - diff.." more seconds!\n")
 			end -- if time or true
 		end -- argc
 		return true
