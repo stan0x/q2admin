@@ -2,9 +2,10 @@
 -- a very limited rcon by hifi <3  version 1.0
 --
 -- changes by TgT
+-- 1.2 disable gamemap (causing crashes) and make sure sv_allow_map is 1
 -- 1.1 fixed sv softmap and sv stuffall and maybe lrcon status crash
 
-local version = "1.1"
+local version = "1.2"
 gi.AddCommandString("sets q2a_lrcon "..version.."\n")
 
 local quit_on_empty 
@@ -12,6 +13,10 @@ local cvars
 
 local claimer = nil
 local claimer_store = nil
+
+-- set  servers sv_allow_map to 1
+
+gi.cvar_set("sv_allow_map", "1")
 
 function q2a_load(config)
     quit_on_empty = config.quit_on_empty
@@ -70,7 +75,7 @@ function ClientCommand(client)
                 gi.cprintf(client, PRINT_HIGH, ' lrcon status            - get client status information\n')
                 gi.cprintf(client, PRINT_HIGH, ' lrcon kick <id>         - kick a player\n')
                 gi.cprintf(client, PRINT_HIGH, ' lrcon map <mapname>     - change map\n')
-                gi.cprintf(client, PRINT_HIGH, ' lrcon gamemap <mapname> - change map (keeping state)\n')
+                --gi.cprintf(client, PRINT_HIGH, ' lrcon gamemap <mapname> - change map (keeping state)\n')
                 return true
             else
                 if client == claimer then
@@ -159,14 +164,14 @@ function ClientCommand(client)
                         return true
                     end
 
-                    if cmd == 'gamemap' then
+                    --[[if cmd == 'gamemap' then
                         if param == nil then
                             gi.cprintf(client, PRINT_HIGH, 'Usage: gamemap <mapname>\n')
                         else
                             gi.AddCommandString('gamemap '..param)
                         end
                         return true
-                    end
+                    end--]]
 
                     if cmd == 'kick' then
 			if param == nil or tonumber(param) == nil then
