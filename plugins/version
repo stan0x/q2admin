@@ -3,6 +3,8 @@ simple !version* script by TgT
 TODO
 	if version table is empty dont crash -- not yet
 CHANGELOG
+v1.4
++ prevent !q2client abuse
 v1.3
 + alternative for !version !versionsay !versionsayall
 v1.2
@@ -23,9 +25,7 @@ local clver = {}
 
 function ClientBegin(client)
     local plr = ex.players[client]
-    --gi.dprintf("hello.lua: %s@%s joined the game\n", plr.name, plr.ip)
-    --ex.stuffcmd(client,"setu q2client $version") -- works only with Q2pro
-    --ex.stuffcmd(client,"set q2client test;q2client $version") -- work with all clients, kinda
+    allowed = 1
     ex.stuffcmd(client,"!q2client $version")
 end
 
@@ -34,13 +34,14 @@ local sm = string.match
 function ClientCommand(client)
     local cmd = gi.argv(1)
 -- 
-    if cmd == "!q2client" then
+    if allowed cmd == "!q2client" then
         local cver = ""
         for i=2,gi.argc() do
             cver = cver .. gi.argv(i) .. " " 
         end
 
         clver[client] = cver
+        allowed = nil
         return true
     end
 -- version stuff
