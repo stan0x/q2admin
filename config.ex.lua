@@ -18,5 +18,7 @@ plugins = {
             'allitem', 'allweapon', 'use_3teams'
         }
     },
-    coinflip = {} -- Heads & Tails script
+    coinflip = {}, -- Heads & Tails script
+    broadcast = {}, -- Broadcast script
+    version = {} -- version feedback script
 }
