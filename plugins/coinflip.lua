@@ -42,7 +42,7 @@ function ClientCommand(client)
                                 	gi.bprintf(PRINT_HIGH, ' flipped a coin: '..ex.hilight("TAILS")..'\n')
 					flip_allow = false
 				elseif number == 49 then
-                                	gi.bprintf(PRINT_HIGH, ' flipped a coin but was stolen by a Angry Bird!\n')
+                                	gi.bprintf(PRINT_HIGH, ' flipped a coin but was stolen by an Angry Bird!\n')
 					flip_allow = true
 				elseif number == 50 then
                                 	gi.bprintf(PRINT_HIGH, ' flipped a coin but it fell on its side!\n')
