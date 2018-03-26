@@ -36,7 +36,7 @@ local sm = string.match
 function ClientCommand(client)
     local cmd = gi.argv(1)
 -- 
-    if allowed cmd == "!q2client" then
+    if allowed ~= nil and cmd == "!q2client" then
         local cver = ""
         for i=2,gi.argc() do
             cver = cver .. gi.argv(i) .. " " 
