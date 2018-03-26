@@ -3,6 +3,8 @@ simple !version* script by TgT
 TODO
 	if version table is empty dont crash -- not yet
 CHANGELOG
+v1.5
++ MVDSPEC crash fix
 v1.4
 + prevent !q2client abuse
 v1.3
@@ -17,7 +19,7 @@ v1
 + works with q2pro clients
 ]]--
 
-local version = "1.3"
+local version = "1.5"
 gi.AddCommandString("sets q2a_version "..version.."\n")
 
 local ver_req = {"!versio.+"}
@@ -51,9 +53,9 @@ function ClientCommand(client)
 			gi.cprintf(client, PRINT_HIGH, 'num  name             client version\n')
 			gi.cprintf(client, PRINT_HIGH, '---  ---------------  ---------------------------------------------\n')
 		for i,plr in pairs(ex.players) do
-				--if plr.name.clver[i] ~= nil then
+				if plr.name ~= "[MVDSPEC]" then
 			               gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %s\n",i, plr.name,clver[i])
-				--end
+				end
 	  		end
 		return true
 		end
