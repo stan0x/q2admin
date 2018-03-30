@@ -50,11 +50,11 @@ function ClientCommand(client)
 	for k,v in pairs(ver_req) do
 		word = sm(cmd,v)	    
 		if word then
-			gi.cprintf(client, PRINT_HIGH, 'num  name             client version\n')
-			gi.cprintf(client, PRINT_HIGH, '---  ---------------  ---------------------------------------------\n')
+			gi.cprintf(client, PRINT_HIGH, 'num  name             client ip          client version			   \n')
+			gi.cprintf(client, PRINT_HIGH, '---  ---------------  ------------------ -----------------------------------------\n')
 		for i,plr in pairs(ex.players) do
 				if plr.name ~= "[MVDSPEC]" then
-			               gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %s\n",i, plr.name,clver[i])
+			               gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %-15s %s\n",i, plr.name,plr.ip,clver[i])
 				end
 	  		end
 		return true
