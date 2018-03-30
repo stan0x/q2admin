@@ -1,12 +1,22 @@
 --
--- a very limited rcon by hifi <3
+-- a very limited rcon by hifi <3  version 1.0
 --
+-- changes by TgT
+-- 1.2 disable gamemap (causing crashes) and make sure sv_allow_map is 1
+-- 1.1 fixed sv softmap and sv stuffall and maybe lrcon status crash
+
+local version = "1.2"
+gi.AddCommandString("sets q2a_lrcon "..version.."\n")
 
 local quit_on_empty 
 local cvars
 
 local claimer = nil
 local claimer_store = nil
+
+-- set  servers sv_allow_map to 1
+
+gi.cvar_set("sv_allow_map", "1")
 
 function q2a_load(config)
     quit_on_empty = config.quit_on_empty
@@ -65,7 +75,7 @@ function ClientCommand(client)
                 gi.cprintf(client, PRINT_HIGH, ' lrcon status            - get client status information\n')
                 gi.cprintf(client, PRINT_HIGH, ' lrcon kick <id>         - kick a player\n')
                 gi.cprintf(client, PRINT_HIGH, ' lrcon map <mapname>     - change map\n')
-                gi.cprintf(client, PRINT_HIGH, ' lrcon gamemap <mapname> - change map (keeping state)\n')
+                --gi.cprintf(client, PRINT_HIGH, ' lrcon gamemap <mapname> - change map (keeping state)\n')
                 return true
             else
                 if client == claimer then
@@ -106,14 +116,16 @@ function ClientCommand(client)
 			gi.cprintf(client, PRINT_HIGH, '---  ---------------  ---------------\n')
 
 			for i,plr in pairs(ex.players) do
-                            gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %s\n", i, plr.name, string.match(plr.ip, '^([^:]+)'))
+				if plr ~= nil
+                            		gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %s\n", i, plr.name, string.match(plr.ip, '^([^:]+)'))
+                            	end
 			end
                         return true
                     end
 
                     if cmd == 'sv' and gi.argc() > 2 then
-                        cmd = gi.argv(2)
-                        param = gi.argv(3)
+                        cmd = gi.argv(3)
+                        param = gi.argv(4)
 
                         if cmd == 'softmap' then
                             if param == nil or string.len(param) < 1 then
@@ -126,13 +138,18 @@ function ClientCommand(client)
 
                         if cmd == 'stuffcmd' then
                             if param == nil or string.len(param) < 1 then
-                                gi.cprintf(client, PRINT_HIGH, 'Usage: sv stuffcmd <client> <command>\n')
+                                gi.cprintf(client, PRINT_HIGH, 'Usage: sv stuffcmd <client/all> <command>\n')
                             else
                                 local rest = ''
-                                for i=4,gi.argc() do
+                                for i=5,gi.argc() do
                                     rest = rest..gi.argv(i)..' '
                                 end
-                                gi.AddCommandString('sv stuffcmd '..param..' '..rest)
+                                if param == "all" then
+                                	gi.AddCommandString('sv stuffcmd all '..rest)
+                                else
+                                	gi.AddCommandString('sv stuffcmd '..param..' '..rest)
+	
+                                end
                             end
                             return true
                         end
@@ -147,14 +164,14 @@ function ClientCommand(client)
                         return true
                     end
 
-                    if cmd == 'gamemap' then
+                    --[[if cmd == 'gamemap' then
                         if param == nil then
                             gi.cprintf(client, PRINT_HIGH, 'Usage: gamemap <mapname>\n')
                         else
                             gi.AddCommandString('gamemap '..param)
                         end
                         return true
-                    end
+                    end--]]
 
                     if cmd == 'kick' then
 			if param == nil or tonumber(param) == nil then
