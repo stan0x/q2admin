@@ -69,7 +69,11 @@ void q2a_lua_init(void)
 		lua_dll = dlopen("liblua.so.5.1.0", RTLD_NOW|RTLD_GLOBAL);
 	}
 	if(!lua_dll) {
-		gi.dprintf("Q2A Lua: Loading Lua shared object failed, tried: liblua5.1.so, liblua.so.5.1, liblua.so.5 and liblua.so.5.1.0\n");
+		lua_dll = dlopen("liblua-5.1.so", RTLD_NOW|RTLD_GLOBAL);
+	}
+
+	if(!lua_dll) {
+		gi.dprintf("Q2A Lua: Loading Lua shared object failed, tried: liblua5.1.so, liblua.so.5.1, liblua.so.5 ,liblua-5.1.so and liblua.so.5.1.0\n");
 		return;
 	}
 
