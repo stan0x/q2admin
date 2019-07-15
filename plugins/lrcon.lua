@@ -116,7 +116,7 @@ function ClientCommand(client)
 			gi.cprintf(client, PRINT_HIGH, '---  ---------------  ---------------\n')
 
 			for i,plr in pairs(ex.players) do
-				if plr ~= nil
+				if plr ~= nil then
                             		gi.cprintf(client, PRINT_HIGH, "%3d  %-15s  %s\n", i, plr.name, string.match(plr.ip, '^([^:]+)'))
                             	end
 			end
