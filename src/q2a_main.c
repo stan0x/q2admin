@@ -26,6 +26,8 @@ void *hdll = NULL;
 #define DLLNAME		"gamei386.real.so"
 #elif defined (__arm__)
 #define DLLNAME         "gamearm.real.so"
+#elif defined (__aarch64__)
+#define DLLNAME         "gameaarch.real.so"
 #endif
 
 #endif
