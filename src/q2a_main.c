@@ -253,7 +253,7 @@ and global variables
 */
 game_export_t *GetGameAPI(game_import_t *import)
 {
-	char dllname[256];
+	char dllname[512];
 	cvar_t *game;
 	GAMEAPI *getapi;
 	game_import_t g_import;
