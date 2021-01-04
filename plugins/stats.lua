@@ -39,29 +39,36 @@ function ClientThink(client)
 end
 
 
-local m4 = { "(.+) had a makeover by (.+)\'s M4 Assault Rifle"
-           , "(.+) feels some heart burn thanks to (.+)\'s M4 Assault Rifle"
-		   , "(.+) has an upset stomach thanks to (.+)\'s M4 Assault Rifle"
-		   , "(.+) is now shorter thanks to (.+)\'s M4 Assault Rifle"
-		   , "(.+) was shot by (.+)\'s M4 Assault Rifle"
-		   , "(.+) plummets to his death" }
-
-
 function LogMessage(msg)
-    --debug of all incoming msg:
-    --gi.AddCommandString("say "..msg.."\n")
-	i = 1
 	
-	-- for evry array in m4 
-	for k,v in pairs(m4) do
-		
-		--if string match in array m4
-		if string.match(msg, m4[i]) then
-			gi.bprintf(PRINT_CHAT, "[STATS]: "..m4[i].." \n")
+	
+	if string.match(msg,"[p_name][p_ip][p_victem][p_weapon][p_weapon_loc]-(.+)-(.+)-(.+)-(.+)-(.+)-") then
+		local stats = {}
+		--gi.bprintf(PRINT_CHAT, "[DEBUG_MSG]  \n")
+		for item in string.gmatch(msg, "([^-]+)") do
+			--print(item)
+			table.insert(stats, item)
 		end
-
-		i = i + 1
+		
+		p_niks1			= (stats[0])
+		p_niks2			= (stats[1])
+		p_name 			= (stats[2])
+		p_ip			= (stats[3])
+		p_victem		= (stats[4])
+		p_weapon		= (stats[5])
+		p_weapon_loc	= (stats[6])
+		
+		print("[------------[STATS---------------]")
+		print("[-- Name      = "..p_name.."")
+		print("[-- Ip        = "..p_ip.."")
+		print("[-- Victem    = "..p_victem.."")
+		print("[-- Weapon    = "..p_weapon.."")
+		print("[-- Location  = "..p_weapon_loc.."")
+		print("[------------[STATS---------------]")
+		
 	end
-	
  
 end -- of LogMessage
+
+
+gi.dprintf("hello.lua: plugin loaded\n")
