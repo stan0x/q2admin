@@ -56,7 +56,7 @@ function LogMessage(msg)
 		p_ip			= (stats[3])
 		p_victem		= (stats[4])
 		p_weapon		= (stats[5])
-		p_weapon_loc	= (stats[6])
+		p_weapon_loc		= (stats[6])
 		
 		print("[------------[STATS---------------]")
 		print("[-- Name      = "..p_name.."")
