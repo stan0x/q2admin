@@ -40,10 +40,14 @@ end
 
 function PrintUser(client)
     local user = ex.players[client]
-    for key, value in pairs(user) do
-        gi.cprintf(client, PRINT_HIGH, key .. ": ")
-        gi.cprintf(client, PRINT_HIGH, value .. "\n")
+    if user then
+        for key, value in pairs(user) do
+            gi.cprintf(client, PRINT_HIGH, key .. ": ")
+            gi.cprintf(client, PRINT_HIGH, value .. "\n")
+        end
+        return true
     end
+    gi.cprintf(client, PRINT_HIGH, "Client not found. Please reconnect.\n")
     return true
 end
 
@@ -51,8 +55,12 @@ function Login (client)
     if gi.argc() > 1 then
         local body = '{"quake_id":"' .. gi.argv(2) .. '"}'
         local user = request(base_url .. "/login", "POST", body)
-        ex.players[client].quake_id = user.quake_id
-        gi.centerprintf(client, "Logged in")
+        if ex.players[client] then
+            ex.players[client].quake_id = user.quake_id
+            gi.centerprintf(client, "Logged in")
+            return true
+        end
+        gi.cprintf(client, PRINT_HIGH, "Client not found. Please reconnect.\n")
     else
         gi.cprintf(client, PRINT_HIGH, "Auth: usage: login <quake id>\n")
     end
