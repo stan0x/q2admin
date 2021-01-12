@@ -42,25 +42,17 @@ end
 
 function ClientConnect(client, userinfo)
   	local plr = ex.players[client] 
-	local row
-	cursor,errorString = conn:execute([[select * from players]])
-	row = cursor:fetch ({}, "a")
-	
-	--remove special chars from string
-	plr.name = plr.name:gsub( "\'", "" )
-	
-	while row do
-	   -- reusing the table of results
-		if plr.discord_id == row.discord_id then
-			--if found a player update name matching discord id.
-			gi.dprintf("auth.lua[STATS]: %s@%s@%s is connecting and updated to database\n",plr.discord_id, plr.name, plr.ip)
-			status,errorString = conn:execute([[UPDATE players SET p_name = CONCAT(p_name ,']]..plr.name..[[, ')  WHERE discord_id = ']]..plr.discord_id..[[']])
-			print(status,errorString )
-			return true
-		end
-		
-		row = cursor:fetch (row, "a")
+	local user
+	cursor,errorString = conn:execute([[select * from players where discord_id = ']]..plr.discord_id..[[']], plr.discord_id)
+	user = cursor:fetch ({}, "a")
+	if user then
+		--if found a player update name matching discord id.
+		gi.dprintf("auth.lua[STATS]: %s@%s@%s is connecting and updated to database\n",plr.discord_id, plr.name, plr.ip)
+		status,errorString = conn:execute([[UPDATE players SET p_name = CONCAT(p_name ,']]..plr.name..[[, ')  WHERE discord_id = ']]..plr.discord_id..[[']])
+		print(status,errorString )
+		return true
 	end
+
 	gi.dprintf("auth.lua[STATS]: %s@%s@%s is connecting and added to database\n",plr.discord_id, plr.name, plr.ip)
     --put data in database
 	status,errorString = conn:execute([[INSERT INTO players (discord_id,p_name,p_ip) values(']]..plr.discord_id..[[',']]..plr.name..[[,',']]..plr.ip..[[')]])
@@ -132,7 +124,7 @@ function LogMessage(msg)
 		
 		
 		print("[------------[STATS---------------]")
-		print("[-- p_nikss    = "..p_niks1.."")
+		print("[-- p_niks     = "..p_niks1.."")
 		print("[-- attackerID = "..attackerid.."")
 		print("[-- Name       = "..p_name.."")
 		print("[-- Ip         = "..p_ip.."")
