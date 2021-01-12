@@ -115,7 +115,8 @@ function LogMessage(msg)
 	
 	if string.match(msg,"[075STATS]-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-") then
 		local stats = {}
-		for item in string.gmatch(msg, "([^-]+)") do
+		for item in string.gmatch(msg, "([^-$-]+)") do
+		--for item in string.gmatch(msg, "([^-]+)") do
 			--print(item)
 			table.insert(stats, item)
 		end
@@ -144,8 +145,12 @@ function LogMessage(msg)
 		--remove special chars from string
 		p_name = p_name:gsub( "\'", "" )
 		
-		-- Update player stats
+		-- Update player stats kill per weapon
 		status,errorString = conn:execute([[UPDATE players SET ]]..p_weapon.. [[ = ]]..p_weapon..[[+1 WHERE discord_id = ']]..attackerid..[[']])
+		-- Update victem death
+		status,errorString = conn:execute([[UPDATE players SET deaths = deaths +1 WHERE discord_id = ']]..victemid..[[']])
+		-- Update player kills total
+		status,errorString = conn:execute([[UPDATE players SET kills = kills +1 WHERE discord_id = ']]..attackerid..[[']])
 		print(status,errorString )
 	end
  
