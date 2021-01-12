@@ -51,16 +51,19 @@ function ClientConnect(client, userinfo)
 	
 	while row do
 	   -- reusing the table of results
-		if plr.name == row.p_name then
+		if plr.discord_id == row.discord_id then
+			--if found a player update name matching discord id.
+			gi.dprintf("auth.lua[STATS]: %s@%s@%s is connecting and updated to database\n",plr.discord_id, plr.name, plr.ip)
+			status,errorString = conn:execute([[UPDATE players SET p_name = CONCAT(p_name ,']]..plr.name..[[, ')  WHERE discord_id = ']]..plr.discord_id..[[']])
+			print(status,errorString )
 			return true
 		end
 		
 		row = cursor:fetch (row, "a")
 	end
-
-	gi.dprintf("auth.lua: %s@%s@%s is connecting\n",plr.discord_id, plr.name, plr.ip)
+	gi.dprintf("auth.lua[STATS]: %s@%s@%s is connecting and added to database\n",plr.discord_id, plr.name, plr.ip)
     --put data in database
-	status,errorString = conn:execute([[INSERT INTO players (discord_id,p_name,p_ip) values(']]..plr.discord_id..[[',']]..plr.name..[[',']]..plr.ip..[[')]])
+	status,errorString = conn:execute([[INSERT INTO players (discord_id,p_name,p_ip) values(']]..plr.discord_id..[[',']]..plr.name..[[,',']]..plr.ip..[[')]])
 	print(status,errorString )
     return true
 end
@@ -110,11 +113,8 @@ end
 
 function LogMessage(msg)
 	
-	--print(msg,"[discord_id][p_name][p_ip][p_victem][p_weapon][p_weapon_loc]-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-")
-	--print(msg)
 	if string.match(msg,"[075STATS]-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-(.+)-") then
 		local stats = {}
-		--gi.bprintf(PRINT_CHAT, "[DEBUG_MSG]  \n")
 		for item in string.gmatch(msg, "([^-]+)") do
 			--print(item)
 			table.insert(stats, item)
