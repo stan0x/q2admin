@@ -58,9 +58,9 @@ function ClientConnect(client, userinfo)
 		row = cursor:fetch (row, "a")
 	end
 
-	gi.dprintf("auth.lua: %s@%s is connecting\n", plr.name, plr.ip)
+	gi.dprintf("auth.lua: %s@%s@%s is connecting\n",plr.discord_id, plr.name, plr.ip)
     --put data in database
-	status,errorString = conn:execute([[INSERT INTO players (p_name,p_ip) values(']]..plr.name..[[',']]..plr.ip..[[')]])
+	status,errorString = conn:execute([[INSERT INTO players (discord_id,p_name,p_ip) values(']]..plr.discord_id..[[',']]..plr.name..[[',']]..plr.ip..[[')]])
 	print(status,errorString )
     return true
 end
@@ -129,7 +129,7 @@ function LogMessage(msg)
 		p_weapon		= (stats[7])
 		p_weapon_loc	= (stats[8])
 		
-		--print to check
+		
 		print("[------------[STATS---------------]")
 		print("[-- p_nikss    = "..p_niks1.."")
 		print("[-- attackerID = "..attackerid.."")
@@ -145,7 +145,7 @@ function LogMessage(msg)
 		p_name = p_name:gsub( "\'", "" )
 		
 		-- Update player stats
-		status,errorString = conn:execute([[UPDATE players SET ]]..p_weapon.. [[ = ]]..p_weapon..[[+1 WHERE p_name = ']]..p_name..[[']])
+		status,errorString = conn:execute([[UPDATE players SET ]]..p_weapon.. [[ = ]]..p_weapon..[[+1 WHERE discord_id = ']]..attackerid..[[']])
 		print(status,errorString )
 	end
  
