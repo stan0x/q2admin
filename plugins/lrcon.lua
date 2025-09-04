@@ -192,6 +192,7 @@ function ClientCommand(client)
                 gi.cprintf(client, PRINT_HIGH, 'Type "lrcon help" for more information.\n')
             end
         end
+        end
         return true
     else
         gi.cprintf(client, PRINT_HIGH, 'lrcon is unavailable, please reconnect...\n')
