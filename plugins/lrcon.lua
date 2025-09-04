@@ -40,7 +40,11 @@ end
 
 function ClientCommand(client)
     if(gi.argv(1) == 'lrcon') then
-        if ex.players[client] ~= nil then
+        if ex.players[client] == nil then
+            gi.cprintf(client, PRINT_HIGH, 'lrcon is unavailable, please reconnect...\n')
+            return true
+        end
+        
         if gi.argc() == 1 then
             gi.cprintf(client, PRINT_HIGH, 'Usage: lrcon <command> [parameters]\n')
             gi.cprintf(client, PRINT_HIGH, 'Type "lrcon help" for more information.\n')
@@ -192,10 +196,6 @@ function ClientCommand(client)
                 gi.cprintf(client, PRINT_HIGH, 'Type "lrcon help" for more information.\n')
             end
         end
-        end
-        return true
-    else
-        gi.cprintf(client, PRINT_HIGH, 'lrcon is unavailable, please reconnect...\n')
         return true
     end
     return false
